@@ -11,6 +11,7 @@ import interceptors.InvocationContext;
 
 public class DebounceMethodInterceptor implements Interceptor
 {
+   @SuppressWarnings("unused")
    private static DebounceStore<String> store = new DebounceStore<String>();
    
    public DebounceMethodInterceptor()
@@ -30,9 +31,9 @@ public class DebounceMethodInterceptor implements Interceptor
       if(debounceAnnotation == null)
          return ctx.proceed();
       
-      DebounceExecutor debouncer = store.registerOrGet(getKey(ctx).toString());
+      DebounceExecutor debouncer = store.get(getKey(ctx).toString());
       
-      return debouncer.debounce(debounceAnnotation.delayMilliseconds(), new DebounceTaskEntryPoint(ctx));
+      return debouncer.debounce(debounceAnnotation.delayMilliseconds(), new DebounceTask(ctx));
    }
    
    static StringBuilder getKey(InvocationContext ctx)
