@@ -24,7 +24,7 @@ public class DebounceExecutor
          @Override
          public Thread newThread(Runnable r)
          {
-            Thread t = new Thread(r, "RslDebouncer");
+            Thread t = new Thread(r, "Debouncer");
             t.setDaemon(true);
             return t;
          }
